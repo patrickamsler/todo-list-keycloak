@@ -1,0 +1,9 @@
+version: '3'
+services:
+    mongodb:
+        restart: always
+        build:
+            context: ./mongo-db
+            dockerfile: Dockerfile
+        ports:
+            - 27017:27017
