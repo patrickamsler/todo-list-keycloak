@@ -8,7 +8,6 @@ services:
         ports:
             - 27017:27017
     api:
-        restart: always
         depends_on:
             - mongo
         build:
@@ -20,4 +19,3 @@ services:
             - MONGO_HOST=mongo
             - MONGO_PORT=27017
             - NODE_PORT=3001
-
