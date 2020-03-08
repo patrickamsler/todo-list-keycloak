@@ -3,6 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const keys = require('./keys');
 
 const mongoUrl = `mongodb://${keys.mongoHost}:${keys.mongoPort}/`;
+console.log(mongoUrl);
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
