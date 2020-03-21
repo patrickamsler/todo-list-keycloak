@@ -1,8 +1,11 @@
 import React from "react";
 
-const Sidebar = ({todoLists}) => {
+const Sidebar = ({todoLists, listClickHandler}) => {
   const listItems = todoLists.map(list =>
-    <li key={list._id}>
+    <li
+      key={list._id}
+      onClick={() => listClickHandler(list._id)}
+    >
       {list.title}
     </li>
   );

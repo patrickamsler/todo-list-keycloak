@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import Sidebar from "./Sidebar/Sidebar";
 import axios from 'axios';
+import ListView from "./ListView/ListView";
 
 const TodoList = () => {
   const [data, setData] = useState([]);
+  const [selectedList, setSelectedList] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,10 +17,19 @@ const TodoList = () => {
     fetchData();
   }, []);
 
+  const listClickHandler = (id) => {
+    const selectedList = data.find(list => list._id === id);
+    setSelectedList(selectedList);
+  };
+
   return (
     <>
       <Sidebar
         todoLists={data}
+        listClickHandler={listClickHandler}
+      />
+      <ListView
+        list={selectedList}
       />
     </>
   )
