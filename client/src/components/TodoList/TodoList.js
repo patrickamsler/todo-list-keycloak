@@ -13,6 +13,9 @@ const TodoList = () => {
         'http://localhost:3001/api/v1/lists/123',
       );
       setData(result.data);
+      if (result.data && result.data.length) {
+        setSelectedList(result.data[0]);
+      }
     };
     fetchData();
   }, []);
