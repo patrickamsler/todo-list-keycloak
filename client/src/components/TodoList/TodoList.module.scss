@@ -1,0 +1,36 @@
+@import '../../style/colors';
+
+$sidebarWidth: 280px;
+$headerHeight: 45px;
+
+.container {
+  height:100%;
+  display:flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  -webkit-flex-direction: row;
+  -webkit-align-content: stretch;
+  align-content: stretch;
+
+  .sidebar-container {
+    width: $sidebarWidth;
+    background: $color-primary-2;
+
+    .sidebar-header {
+      height: $headerHeight;
+      background: $color-primary-3;
+    }
+  }
+
+  .todo-container {
+    -webkit-flex: 1;
+    flex:1;
+    position:relative;
+    background: $color-primary-1;
+
+    .todo-header {
+      height: $headerHeight;
+      background: $color-primary-0;
+    }
+  }
+}

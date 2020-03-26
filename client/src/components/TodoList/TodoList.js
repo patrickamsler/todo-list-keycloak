@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Sidebar from "./Sidebar/Sidebar";
 import axios from 'axios';
 import ListView from "./ListView/ListView";
+import styles from './TodoList.module.scss';
 
 const TodoList = () => {
   const [data, setData] = useState([]);
@@ -26,15 +27,25 @@ const TodoList = () => {
   };
 
   return (
-    <>
-      <Sidebar
-        todoLists={data}
-        listClickHandler={listClickHandler}
-      />
-      <ListView
-        list={selectedList}
-      />
-    </>
+    <div className={styles.container}>
+      <div className={styles["sidebar-container"]}>
+        <div className={styles["sidebar-header"]}>
+
+        </div>
+        <Sidebar
+          todoLists={data}
+          listClickHandler={listClickHandler}
+        />
+      </div>
+      <div className={styles["todo-container"]}>
+        <div className={styles["todo-header"]}>
+          {selectedList ? selectedList.title : ''}
+        </div>
+        <ListView
+          list={selectedList}
+        />
+      </div>
+    </div>
   )
 };
 
