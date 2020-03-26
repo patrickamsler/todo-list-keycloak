@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
-import Sidebar from "./Sidebar/Sidebar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import axios from 'axios';
-import ListView from "./ListView/ListView";
+import ListView from "../../components/ListView/ListView";
 import styles from './TodoList.module.scss';
 
 const TodoList = () => {
