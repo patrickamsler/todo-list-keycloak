@@ -1,16 +1,18 @@
 import React from "react";
+import { List, Segment } from "semantic-ui-react";
 
 const Sidebar = ({todoLists, listClickHandler}) => {
   const listItems = todoLists.map(list =>
-    <li
-      key={list._id}
-      onClick={() => listClickHandler(list._id)}
-    >
-      {list.title}
-    </li>
+      <List.Item
+          key={list._id}
+          onClick={() => listClickHandler(list._id)}
+          icon='list alternate'
+          content={list.title}
+      />
   );
+  
   return (
-    <ul>{listItems}</ul>
+      <List>{listItems}</List>
   )
 };
 
