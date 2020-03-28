@@ -3,7 +3,8 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import axios from 'axios';
 import ListView from "../../components/ListView/ListView";
 import styles from './TodoList.module.scss';
-import { Segment } from "semantic-ui-react";
+import { Button, Header, Input, Segment } from "semantic-ui-react";
+import { List } from "semantic-ui-react/dist/commonjs/elements/List/List";
 
 const TodoList = () => {
   const [data, setData] = useState([]);
@@ -28,19 +29,24 @@ const TodoList = () => {
   };
   
   return (
-      <div className={styles.container}>
-        <div className={styles["side-bar"]}>
-          <Sidebar
-              todoLists={data}
-              listClickHandler={listClickHandler}
-          />
-        </div>
+      <Segment className={styles.container}>
+        <Segment className={styles["side-bar"]}>
+            <Sidebar
+                todoLists={data}
+                listClickHandler={listClickHandler}
+            />
+        </Segment>
         <div className={styles["todo-list"]}>
+          <Header as='h2'>{selectedList.title}</Header>
+          <Input
+              className={styles["todo-input"]}
+              placeholder='Todo...'/>
+          <Button secondary>Add</Button>
           <ListView
               list={selectedList}
           />
         </div>
-      </div>
+      </Segment>
   )
 };
 

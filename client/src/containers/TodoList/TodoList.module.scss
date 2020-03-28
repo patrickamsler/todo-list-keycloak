@@ -1,17 +1,25 @@
 .container {
   display: flex;
-  height: 100%;
-  margin: 10px;
+  margin: 50px !important;
+  height: 500px;
+  flex-direction: row;
 
   .side-bar {
     //background-color: #f7941d;
     flex: 1;
-    height: 100%;
+    //height: 100%;
+    max-width: 300px;
+    margin-right: 20px !important;
   }
 
   .todo-list {
     //background-color: #8d5022;
     flex: 1;
-    height: 100%;
+    //height: 100%;
+  }
+
+  .todo-input {
+    margin-right: 5px;
+    width:70%;
   }
 }

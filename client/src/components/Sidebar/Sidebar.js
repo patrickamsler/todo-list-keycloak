@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Segment } from "semantic-ui-react";
+import { Button, List, Segment } from "semantic-ui-react";
 
 const Sidebar = ({todoLists, listClickHandler}) => {
   const listItems = todoLists.map(list =>
@@ -11,8 +11,14 @@ const Sidebar = ({todoLists, listClickHandler}) => {
       />
   );
   
+  listItems.push(
+      <List.Item>
+        <Button secondary>Create Todo List</Button>
+      </List.Item>
+  );
+  
   return (
-      <List>{listItems}</List>
+      <List divided relaxed>{listItems}</List>
   )
 };
 
