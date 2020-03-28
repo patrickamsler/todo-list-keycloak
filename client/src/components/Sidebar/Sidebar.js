@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, List, Segment } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
+import CreateListModal from "../CreateListModal/CreateListModal";
 
 const Sidebar = ({todoLists, listClickHandler}) => {
   const listItems = todoLists.map(list =>
@@ -12,8 +13,10 @@ const Sidebar = ({todoLists, listClickHandler}) => {
   );
   
   listItems.push(
-      <List.Item>
-        <Button secondary>Create Todo List</Button>
+      <List.Item
+          key={42}
+      >
+        <CreateListModal />
       </List.Item>
   );
   

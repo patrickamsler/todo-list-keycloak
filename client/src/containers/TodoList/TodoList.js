@@ -4,7 +4,6 @@ import axios from 'axios';
 import ListView from "../../components/ListView/ListView";
 import styles from './TodoList.module.scss';
 import { Button, Header, Input, Segment } from "semantic-ui-react";
-import { List } from "semantic-ui-react/dist/commonjs/elements/List/List";
 
 const TodoList = () => {
   const [data, setData] = useState([]);
