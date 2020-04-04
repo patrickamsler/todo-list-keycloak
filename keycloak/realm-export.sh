@@ -5,4 +5,4 @@ docker exec -it todo-list_keycloak_1 /opt/jboss/keycloak/bin/standalone.sh \
 -Dkeycloak.migration.provider=singleFile \
 -Dkeycloak.migration.realmName=todo-list-realm \
 -Dkeycloak.migration.usersExportStrategy=REALM_FILE \
--Dkeycloak.migration.file=/tmp/todo-list-realm.json
+-Dkeycloak.migration.file=/tmp/todo-list/todo-list-realm.json
