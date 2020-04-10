@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 import styles from './Login.module.scss';
-import { useKeycloak, withKeycloak } from "@react-keycloak/web";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Login = () => {
   const [ keycloak ] = useKeycloak();
@@ -23,4 +23,4 @@ const Login = () => {
   );
 };
 
-export default withKeycloak(Login)
+export default Login;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { useKeycloak, withKeycloak } from "@react-keycloak/web";
+import { useKeycloak } from "@react-keycloak/web";
 
 const PrivateRoute = ({children, ...rest}) => {
   
@@ -25,4 +25,4 @@ const PrivateRoute = ({children, ...rest}) => {
   );
 };
 
-export default withKeycloak(PrivateRoute);
+export default PrivateRoute;
