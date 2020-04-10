@@ -1,28 +1,32 @@
 import React from 'react';
 import './App.module.scss';
-import TodoList from "./containers/TodoList/TodoList";
 import 'semantic-ui-css/semantic.min.css';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./components/Login/Login";
-import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-import { initKeycloak } from './services/AuthService'
+import { KeycloakProvider } from '@react-keycloak/web'
+import Keycloak from "keycloak-js";
+import AppRouter from "./routes/AppRounter";
 
 
 const App = () => {
   
-  initKeycloak();
+  const config = {
+    clientId: 'todo-list-client',
+    realm: 'todo-list-realm',
+    url: 'http://localhost:8080/auth/'
+  };
+  
+  const initConfig = {
+    onLoad: 'check-sso',
+    promiseType: 'native',
+    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
+  };
   
   return (
-      <Router>
-        <Switch>
-          <PrivateRoute path="/lists">
-            <TodoList/>
-          </PrivateRoute>
-          <Route path={["/", "/login"]}>
-            <Login/>
-          </Route>
-        </Switch>
-      </Router>
+      <KeycloakProvider
+          keycloak={new Keycloak(config)}
+          initConfig={initConfig}
+      >
+        <AppRouter/>
+      </KeycloakProvider>
   );
 };
 

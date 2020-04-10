@@ -1,9 +1,16 @@
 import React from "react";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 import styles from './Login.module.scss';
-import { login } from "../../services/AuthService";
+import { useKeycloak, withKeycloak } from "@react-keycloak/web";
 
 const Login = () => {
+  const [ keycloak ] = useKeycloak();
+  
+  const login = () => {
+    keycloak.login({
+      redirectUri: 'http://localhost:3000/lists'
+    })
+  };
   
   return (
       <Segment placeholder className={styles.login}>
@@ -16,4 +23,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withKeycloak(Login)
