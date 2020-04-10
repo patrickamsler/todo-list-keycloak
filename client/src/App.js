@@ -11,7 +11,7 @@ const App = () => {
   const config = {
     clientId: 'todo-list-client',
     realm: 'todo-list-realm',
-    url: 'http://localhost:8080/auth/'
+    url: process.env.REACT_APP_AUTH_URL
   };
   
   const initConfig = {

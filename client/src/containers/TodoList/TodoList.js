@@ -16,7 +16,7 @@ const TodoList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-          `http://localhost:3001/api/v1/lists/${userId}`,
+          `${process.env.REACT_APP_API_HOST}/api/v1/lists/${userId}`,
       );
       setData(result.data);
       if (result.data && result.data.length) {

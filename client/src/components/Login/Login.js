@@ -8,7 +8,7 @@ const Login = () => {
   
   const login = () => {
     keycloak.login({
-      redirectUri: 'http://localhost:3000/lists'
+      redirectUri: process.env.REACT_APP_REDIRECT_URI
     })
   };
   
