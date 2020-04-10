@@ -11,10 +11,12 @@ const TodoList = () => {
   const [selectedList, setSelectedList] = useState({});
   const [keycloak] = useKeycloak();
   
+  const userId = keycloak.tokenParsed.sub;
+  
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-          'http://localhost:3001/api/v1/lists/58060233-0f2c-459b-89d9-ae4ebd9d41c9',
+          `http://localhost:3001/api/v1/lists/${userId}`,
       );
       setData(result.data);
       if (result.data && result.data.length) {
@@ -22,7 +24,7 @@ const TodoList = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [userId]);
   
   const listClickHandler = (id) => {
     const selectedList = data.find(list => list._id === id);
