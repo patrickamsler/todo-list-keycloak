@@ -12,7 +12,7 @@ const TodoList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-          'http://localhost:3001/api/v1/lists/123',
+          'http://localhost:3001/api/v1/lists/58060233-0f2c-459b-89d9-ae4ebd9d41c9',
       );
       setData(result.data);
       if (result.data && result.data.length) {

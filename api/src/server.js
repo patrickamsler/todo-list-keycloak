@@ -2,10 +2,12 @@ const express = require('express');
 require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 const keys = require('./keys');
+const cors = require('cors');
 
 const mongoUrl = `mongodb://${keys.mongoHost}:${keys.mongoPort}/`;
 console.log(mongoUrl);
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
