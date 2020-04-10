@@ -328,6 +328,31 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister" : false,
   "webAuthnPolicyPasswordlessAcceptableAaguids" : [ ],
   "users" : [ {
+    "id" : "b057668f-4b39-4069-92b0-bbfe13f7de63",
+    "createdTimestamp" : 1586497073834,
+    "username" : "alice",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "firstName" : "Alice",
+    "lastName" : "Johnson",
+    "email" : "alice.johnson@mail.com",
+    "credentials" : [ {
+      "id" : "3e9d2df9-cdb7-4762-916c-e67f36da17f0",
+      "type" : "password",
+      "createdDate" : 1586497090682,
+      "secretData" : "{\"value\":\"7uHnrKtykcs+ob6fzLsR82gqTRLTKa62lIPuUBVQd75dahTZOlGwZGksNuarkWqHcMHvpMIann+n33i6cz2LpQ==\",\"salt\":\"N1wr590OkfBaG1YXZpqGUg==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "uma_authorization", "offline_access" ],
+    "clientRoles" : {
+      "account" : [ "view-profile", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "58060233-0f2c-459b-89d9-ae4ebd9d41c9",
     "createdTimestamp" : 1586056504325,
     "username" : "john",
@@ -350,7 +375,7 @@
     "clientRoles" : {
       "account" : [ "view-profile", "manage-account" ]
     },
-    "notBefore" : 0,
+    "notBefore" : 1586094492,
     "groups" : [ ]
   } ],
   "scopeMappings" : [ {
@@ -562,15 +587,15 @@
   }, {
     "id" : "a5017b1d-d363-43df-aaa5-0957c2b2b0a1",
     "clientId" : "todo-list-client",
-    "rootUrl" : "http://localhost:3000",
-    "adminUrl" : "http://localhost:3000",
+    "rootUrl" : "http://localhost:3000/*",
+    "adminUrl" : "http://localhost:3000/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
     "secret" : "2eb7efdd-8d4d-4096-9236-bd40570e39e2",
     "redirectUris" : [ "http://localhost:3000/*" ],
-    "webOrigins" : [ "http://localhost:3000" ],
+    "webOrigins" : [ "*" ],
     "notBefore" : 0,
     "bearerOnly" : false,
     "consentRequired" : false,

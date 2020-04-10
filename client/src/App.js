@@ -3,21 +3,27 @@ import './App.module.scss';
 import TodoList from "./containers/TodoList/TodoList";
 import 'semantic-ui-css/semantic.min.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./containers/Login/Login";
+import Login from "./components/Login/Login";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import { initKeycloak } from './services/AuthService'
 
-function App() {
+
+const App = () => {
+  
+  initKeycloak();
+  
   return (
       <Router>
         <Switch>
-          <Route path="/lists">
+          <PrivateRoute path="/lists">
             <TodoList/>
-          </Route>
+          </PrivateRoute>
           <Route path={["/", "/login"]}>
             <Login/>
           </Route>
         </Switch>
       </Router>
   );
-}
+};
 
 export default App;
