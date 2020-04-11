@@ -10,7 +10,7 @@ console.log(mongoUrl);
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 // Create middleware for checking the JWT
 const checkJwt = jwt({
@@ -28,20 +28,22 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
-app.get('/api/v1/lists/:userId', checkJwt, (req, res) => {
-    MongoClient.connect(mongoUrl, function(err, db) {
-        if (err) throw err;
-        const dbo = db.db("todo");
-        const query = { userId: req.params.userId };
-        dbo.collection("todoList").find(query).toArray(function(err, result) {
-          if (err) throw err;
-          res.send(result);
-          db.close();
-        });
-      });
+app.use(checkJwt); //the decoded token is attached to req.user
+
+app.get('/api/v1/lists', (req, res) => {
+  MongoClient.connect(mongoUrl, (err, db) => {
+    if (err) throw err;
+    const dbo = db.db("todo");
+    const query = {userId: req.user.sub};
+    dbo.collection("todoList").find(query).toArray((err, result) => {
+      if (err) throw err;
+      res.send(result);
+      db.close();
+    });
+  });
 });
 
 const port = process.env.NODE_PORT;
-app.listen(port, function () {
-    console.log(`Server is running on ${port} port`);
+app.listen(port, () => {
+  console.log(`Server is running on ${port} port`);
 });
