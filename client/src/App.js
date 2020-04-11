@@ -20,10 +20,16 @@ const App = () => {
     silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
   };
   
+  const onTokens = (tokens) => {
+    console.log("tokens refresh");
+    console.log(JSON.stringify(tokens, null, 4));
+  };
+  
   return (
       <KeycloakProvider
           keycloak={new Keycloak(config)}
           initConfig={initConfig}
+          onTokens={onTokens}
       >
         <AppRouter/>
       </KeycloakProvider>
