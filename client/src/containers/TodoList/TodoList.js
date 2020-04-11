@@ -11,12 +11,17 @@ const TodoList = () => {
   const [selectedList, setSelectedList] = useState({});
   const [keycloak] = useKeycloak();
   
-  const userId = keycloak.tokenParsed.sub;
+  const token = keycloak.token;
   
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(
-          `${process.env.REACT_APP_API_HOST}/api/v1/lists/${userId}`,
+      const result = await axios.get(
+          `${process.env.REACT_APP_API_HOST}/api/v1/lists`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
       );
       setData(result.data);
       if (result.data && result.data.length) {
@@ -24,7 +29,7 @@ const TodoList = () => {
       }
     };
     fetchData();
-  }, [userId]);
+  }, [token]);
   
   const listClickHandler = (id) => {
     const selectedList = data.find(list => list._id === id);
@@ -34,10 +39,10 @@ const TodoList = () => {
   return (
       <Segment className={styles.container}>
         <Segment className={styles["side-bar"]}>
-            <Sidebar
-                todoLists={data}
-                listClickHandler={listClickHandler}
-            />
+          <Sidebar
+              todoLists={data}
+              listClickHandler={listClickHandler}
+          />
         </Segment>
         <div className={styles["todo-list"]}>
           <Header as='h2'>{selectedList.title}</Header>
