@@ -30,17 +30,22 @@ const checkJwt = jwt({
 
 app.use(checkJwt); //the decoded token is attached to req.user
 
-app.get('/api/v1/lists', (req, res) => {
-  MongoClient.connect(mongoUrl, (err, db) => {
-    if (err) throw err;
-    const dbo = db.db("todo");
-    const query = {userId: req.user.sub};
-    dbo.collection("todoList").find(query).toArray((err, result) => {
-      if (err) throw err;
-      res.send(result);
-      db.close();
-    });
-  });
+MongoClient.connect(mongoUrl, (err, db) => {
+  if (err) {
+    throw err;
+  }
+  const dbo = db.db("todo");
+  
+  // get all lists
+  app.get('/api/v1/lists', (req, res) => {
+    dbo.collection("todoList")
+        .find({
+          userId: req.user.sub
+        })
+        .toArray()
+        .then(results => res.send(results))
+  })
+  
 });
 
 const port = process.env.NODE_PORT;
