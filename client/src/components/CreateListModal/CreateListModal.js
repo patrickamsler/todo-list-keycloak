@@ -21,7 +21,7 @@ const CreateListModal = () => {
   
   return (
       <Modal
-          trigger={<Button secondary onClick={open}>Create Todo List</Button>}
+          trigger={<Button style={{marginTop: "20px"}} secondary onClick={open}>Create Todo List</Button>}
           size="tiny"
           open={modalState.open}
           onClose={close}
