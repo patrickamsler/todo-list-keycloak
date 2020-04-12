@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Button, Input, Modal } from 'semantic-ui-react'
 
-const CreateListModal = () => {
+const CreateListModal = ({onCreateList}) => {
   
   const [modalState, setModalState] = useState({open: false});
   const [listTitle, setListTitle] = useState('');
   
   const close = (create) => {
     if (create) {
-      console.log(`Create list ${listTitle}`);
+      onCreateList(listTitle);
     }
     setModalState({open: false});
     setListTitle('');

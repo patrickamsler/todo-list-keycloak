@@ -3,7 +3,7 @@ import { List } from "semantic-ui-react";
 import CreateListModal from "../CreateListModal/CreateListModal";
 import UserMenu from "../UserMenu/UserMenu";
 
-const Sidebar = ({todoLists, listClickHandler}) => {
+const Sidebar = ({todoLists, onListClick, onCreateList}) => {
   const listItems = [];
   listItems.push(
       <UserMenu
@@ -14,7 +14,7 @@ const Sidebar = ({todoLists, listClickHandler}) => {
   listItems.push(todoLists.map(list =>
       <List.Item
           key={list._id}
-          onClick={() => listClickHandler(list._id)}
+          onClick={() => onListClick(list._id)}
           icon='list alternate'
           content={list.title}
       />
@@ -24,7 +24,7 @@ const Sidebar = ({todoLists, listClickHandler}) => {
       <List.Item
           key={42}
       >
-        <CreateListModal/>
+        <CreateListModal onCreateList={onCreateList}/>
       </List.Item>
   );
   

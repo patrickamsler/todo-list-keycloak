@@ -1,47 +1,49 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import axios from 'axios';
 import ListView from "../../components/ListView/ListView";
 import styles from './TodoList.module.scss';
 import { Button, Header, Input, Segment } from "semantic-ui-react";
 import { useKeycloak } from "@react-keycloak/web";
+import { createList, getLists } from "../../utils/AxiosHelper";
 
 const TodoList = () => {
-  const [data, setData] = useState([]);
+  const [lists, setLists] = useState([]);
   const [selectedList, setSelectedList] = useState({});
   const [keycloak] = useKeycloak();
   
   const token = keycloak.token;
   
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(
-          `${process.env.REACT_APP_API_HOST}/api/v1/lists`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+    getLists(token)
+        .then(response => {
+          setLists(response.data);
+          if (response.data && response.data.length) {
+            setSelectedList(response.data[0]);
           }
-      );
-      setData(result.data);
-      if (result.data && result.data.length) {
-        setSelectedList(result.data[0]);
-      }
-    };
-    fetchData();
+        });
   }, [token]);
   
-  const listClickHandler = (id) => {
-    const selectedList = data.find(list => list._id === id);
+  const onListClick = (id) => {
+    const selectedList = lists.find(list => list._id === id);
     setSelectedList(selectedList);
+  };
+  
+  const onCreateList = (title) => {
+    createList(token, {title})
+        .then(response => {
+          const newList = response.data;
+          setLists([...lists, newList]);
+          setSelectedList(newList);
+        });
   };
   
   return (
       <Segment className={styles.container}>
         <Segment className={styles["side-bar"]}>
           <Sidebar
-              todoLists={data}
-              listClickHandler={listClickHandler}
+              todoLists={lists}
+              onListClick={onListClick}
+              onCreateList={onCreateList}
           />
         </Segment>
         <div className={styles["todo-list"]}>

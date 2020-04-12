@@ -1,7 +1,7 @@
 .container {
   display: flex;
   margin: 50px !important;
-  height: 500px;
+  min-height: 500px;
   flex-direction: row;
 
   .side-bar {
