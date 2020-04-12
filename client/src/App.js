@@ -17,7 +17,9 @@ const App = () => {
   const initConfig = {
     onLoad: 'check-sso',
     promiseType: 'native',
-    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
+    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
+    pkceMethod: 'S256',
+    enableLogging: true
   };
   
   const onTokens = (tokens) => {
