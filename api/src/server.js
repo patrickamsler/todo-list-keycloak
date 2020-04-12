@@ -55,7 +55,7 @@ MongoClient.connect(mongoUrl, (err, db) => {
           title: req.body.title,
           todos: []
         })
-        .then(() => res.sendStatus(204))
+        .then(result => res.send(result.ops[0]))
   });
   
   // add todo
