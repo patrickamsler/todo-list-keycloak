@@ -5,6 +5,7 @@ const ObjectID = require('mongodb').ObjectID;
 const cors = require('cors');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
+const TodoRepository = require('./TodoRepository');
 
 const mongoUrl = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/`;
 console.log(mongoUrl);
@@ -36,66 +37,39 @@ MongoClient.connect(mongoUrl, (err, db) => {
     throw err;
   }
   const dbo = db.db("todo");
+  const todoRepo = new TodoRepository(dbo);
   
   // get all lists
-  app.get('/api/v1/lists', (req, res) => {
-    dbo.collection("todoList")
-        .find({
-          userId: req.user.sub
-        })
-        .toArray()
-        .then(results => res.send(results))
+  app.get('/api/v1/lists', async (req, res) => {
+    const lists = await todoRepo.getLists(req.user.sub);
+    res.send(lists);
   });
   
   // create new list
-  app.post('/api/v1/lists', (req, res) => {
-    dbo.collection("todoList")
-        .insertOne({
-          userId: req.user.sub,
-          title: req.body.title,
-          todos: []
-        })
-        .then(result => res.send(result.ops[0]))
+  app.post('/api/v1/lists', async (req, res) => {
+    const createdList = await todoRepo.insertList(req.user.sub, req.body.title);
+    res.send(createdList);
   });
   
   // add todo
-  app.put('/api/v1/lists/:listId/todo', (req, res) => {
-    const listQuery = {
-      _id: ObjectID(req.params.listId),
-      userId: req.user.sub,
-    };
-    const newTodo = {
-      $push: {
-        todos: {
-          _id: new ObjectID(),
-          title: req.body.title,
-          done: false,
-          description: req.body.description
-        }
-      }
-    };
-    dbo.collection("todoList")
-        .updateOne(listQuery, newTodo)
-        .then(() => res.sendStatus(204))
+  app.post('/api/v1/lists/:listId/todos', async (req, res) => {
+    const userId = req.user.sub;
+    const listId = req.params.listId;
+    const todoId = await todoRepo.insertTodo(userId, listId, req.body);
+    const list = await todoRepo.getList(userId, listId);
+    const newTodo = list.todos.filter(todo => todo._id.toString() === todoId)[0];
+    res.send(newTodo);
   });
   
   // update todo
-  app.put('/api/v1/lists/:listId/todo/:todoId', (req, res) => {
-    const query = {
-      _id: ObjectID(req.params.listId),
-      userId: req.user.sub,
-      "todos._id": ObjectID(req.params.todoId)
-    };
-    const update = {
-      $set: {
-        "todos.$.title": req.body.title,
-        "todos.$.done": req.body.done,
-        "todos.$.description": req.body.description
-      }
-    };
-    dbo.collection("todoList")
-        .updateOne(query, update)
-        .then(() => res.sendStatus(204))
+  app.put('/api/v1/lists/:listId/todos/:todoId', async (req, res) => {
+    const userId = req.user.sub;
+    const listId = req.params.listId;
+    const todoId = req.params.todoId;
+    await todoRepo.updateTodo(userId, listId, todoId, req.body);
+    const list = await todoRepo.getList(userId, listId);
+    const updatedTodo = list.todos.filter(todo => todo._id.toString() === todoId)[0];
+    res.send(updatedTodo);
   });
   
 });
