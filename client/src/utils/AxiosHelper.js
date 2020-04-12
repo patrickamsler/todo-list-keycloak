@@ -17,3 +17,11 @@ export const getLists = (token) => {
 export const createList = (token, body) => {
   return axios.post(`${API_URL}/lists`, body, axiosConfig(token));
 };
+
+export const createTodo = (token, listId, todo) => {
+  return axios.post(`${API_URL}/lists/${listId}/todos`, todo, axiosConfig(token));
+};
+
+export const updateTodo = (token, listId, todo) => {
+  return axios.put(`${API_URL}/lists/${listId}/todos/${todo._id}`, todo, axiosConfig(token));
+};

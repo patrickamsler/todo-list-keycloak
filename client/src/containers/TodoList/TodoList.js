@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import ListView from "../../components/ListView/ListView";
 import styles from './TodoList.module.scss';
-import { Button, Header, Input, Segment } from "semantic-ui-react";
+import { Segment } from "semantic-ui-react";
 import { useKeycloak } from "@react-keycloak/web";
-import { createList, getLists } from "../../utils/AxiosHelper";
+import { createList, createTodo, getLists, updateTodo } from "../../utils/AxiosHelper";
 
 const TodoList = () => {
   const [lists, setLists] = useState([]);
@@ -37,6 +37,37 @@ const TodoList = () => {
         });
   };
   
+  const onCreateTodo = (title) => {
+    const todo = {
+      title,
+      done: false,
+      description: ""
+    };
+    createTodo(token, selectedList._id, todo)
+        .then(response => {
+          const newTodo = response.data;
+          const listCopy = {...selectedList};
+          listCopy.todos.push(newTodo);
+          setSelectedList(listCopy);
+        })
+  };
+  
+  const onUpdateTodo = (todo) => {
+    updateTodo(token, selectedList._id, todo)
+        .then(response => {
+          const updatedTodo = response.data;
+          const todos = selectedList.todos.map(todo => {
+            if (todo._id === updatedTodo._id) {
+              return updatedTodo;
+            } else {
+              return todo;
+            }
+          });
+          const listCopy = {...selectedList, todos};
+          setSelectedList(listCopy);
+        })
+  };
+  
   return (
       <Segment className={styles.container}>
         <Segment className={styles["side-bar"]}>
@@ -47,13 +78,10 @@ const TodoList = () => {
           />
         </Segment>
         <div className={styles["todo-list"]}>
-          <Header as='h2'>{selectedList.title}</Header>
-          <Input
-              className={styles["todo-input"]}
-              placeholder='Todo...'/>
-          <Button secondary>Add</Button>
           <ListView
               list={selectedList}
+              onCreateTodo={onCreateTodo}
+              onUpdateTodo={onUpdateTodo}
           />
         </div>
       </Segment>
