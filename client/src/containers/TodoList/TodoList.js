@@ -3,25 +3,22 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import ListView from "../../components/ListView/ListView";
 import styles from './TodoList.module.scss';
 import { Segment } from "semantic-ui-react";
-import { useKeycloak } from "@react-keycloak/web";
-import { createList, createTodo, getLists, updateTodo } from "../../utils/AxiosHelper";
+import { useApi } from "../../utils/Api";
 
 const TodoList = () => {
   const [lists, setLists] = useState([]);
   const [selectedList, setSelectedList] = useState({});
-  const [keycloak] = useKeycloak();
-  
-  const token = keycloak.token;
+  const {getLists, createList, createTodo, updateTodo} = useApi();
   
   useEffect(() => {
-    getLists(token)
+    getLists()
         .then(response => {
           setLists(response.data);
           if (response.data && response.data.length) {
             setSelectedList(response.data[0]);
           }
         });
-  }, [token]);
+  }, []);
   
   const onListClick = (id) => {
     const selectedList = lists.find(list => list._id === id);
@@ -29,7 +26,7 @@ const TodoList = () => {
   };
   
   const onCreateList = (title) => {
-    createList(token, {title})
+    createList({title})
         .then(response => {
           const newList = response.data;
           setLists([...lists, newList]);
@@ -43,7 +40,7 @@ const TodoList = () => {
       done: false,
       description: ""
     };
-    createTodo(token, selectedList._id, todo)
+    createTodo(selectedList._id, todo)
         .then(response => {
           const newTodo = response.data;
           const listCopy = {...selectedList};
@@ -53,7 +50,7 @@ const TodoList = () => {
   };
   
   const onUpdateTodo = (todo) => {
-    updateTodo(token, selectedList._id, todo)
+    updateTodo(selectedList._id, todo)
         .then(response => {
           const updatedTodo = response.data;
           const todos = selectedList.todos.map(todo => {
