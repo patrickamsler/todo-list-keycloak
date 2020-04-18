@@ -1,7 +1,6 @@
 # To-Do List React Application with Keycloak
 
-Simple React demo application that uses Keycloak for user authentication and single sign on. It includes also a protected RESTful API based on NodeJS and MongoDB to store user data. The idea of the app is to demonstrate the concepts of login, SSO and silent authentication for React single page applications. Keycloak provides OAuth/OpenID Connect endpoints to retrieve user information and issue access tokens by using the authorization code grant flow PKCE. The application doesn’t have a back-end component and stores the tokens directly in the browser’s local storage.
-
+Simple React demo application that uses Keycloak for user authentication. The idea of the app is to demonstrate the concepts of login, SSO and silent authentication for single page applications. It includes also a protected RESTful API based on NodeJS and MongoDB to store user data. Keycloak exposes OAuth/OpenID-Connect endpoints to retrieve user information and issue access tokens by using the authorization code grant flow PKCE. The application doesn’t have a back-end component and stores the tokens directly in the browser’s local storage.
 ![alt text](doc/Diagram.png)
 
 
