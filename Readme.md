@@ -22,7 +22,7 @@ Prerequisites
 docker-compose up --build
 ```
 
-2. Start React Client:
+2. Start React client
 ```bash
 cd client
 npm install
