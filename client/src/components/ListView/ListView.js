@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Header, Input, List } from "semantic-ui-react";
 import styles from './ListView.module.scss';
 
 const ListView = ({list, onCreateTodo, onUpdateTodo}) => {
   const [todoText, setTodoText] = useState("");
-  const listItems = [];
+  const [todos, setTodos] = useState([]);
   
-  const onCheckboxClick = (todo) => {
-    onUpdateTodo({...todo, done: !todo.done});
+  useEffect(() => {
+    if (list.todos) {
+      setTodos(list.todos.slice());
+    }
+  }, [list.todos]);
+  
+  const listItems = [];
+  const listTitle = list?.title;
+  
+  const onCheckboxClick = (id) => {
+    const copyTodos = todos.slice();
+    const idx = copyTodos.findIndex(todo => todo._id === id);
+    copyTodos[idx].done = !copyTodos[idx].done;
+    setTodos(copyTodos);
+    onUpdateTodo(copyTodos[idx]);
   };
   
   const onAddTodoClick = () => {
@@ -15,15 +28,15 @@ const ListView = ({list, onCreateTodo, onUpdateTodo}) => {
     setTodoText("");
   };
   
-  if (list.todos) {
-    listItems.push(list.todos.map(todo =>
+  if (todos) {
+    listItems.push(todos.map(todo =>
         <List.Item
             key={todo._id}
         >
           <Checkbox
               key={todo._id}
               label={todo.title}
-              onClick={() => onCheckboxClick(todo)}
+              onClick={() => onCheckboxClick(todo._id)}
               checked={todo.done}
           />
         </List.Item>
@@ -32,7 +45,7 @@ const ListView = ({list, onCreateTodo, onUpdateTodo}) => {
   
   return (
       <>
-        <Header as='h2'>{list.title}</Header>
+        <Header as='h2'>{listTitle}</Header>
         <Input
             className={styles["todo-input"]}
             placeholder='Todo...'

@@ -7,30 +7,34 @@ import { useApi } from "../../utils/Api";
 
 const TodoList = () => {
   const [lists, setLists] = useState([]);
-  const [selectedList, setSelectedList] = useState({});
+  const [selectedListId, setSelectedListId] = useState();
   const {getLists, createList, createTodo, updateTodo} = useApi();
   
-  useEffect(() => {
+  const refreshList = (selectedId) => {
     getLists()
         .then(response => {
           setLists(response.data);
-          if (response.data && response.data.length) {
-            setSelectedList(response.data[0]);
+          if (selectedId) {
+            setSelectedListId(selectedId);
+          } else {
+            setSelectedListId(response.data[0]._id);
           }
         });
+  };
+  
+  useEffect(() => {
+    refreshList()
   }, []);
   
   const onListClick = (id) => {
-    const selectedList = lists.find(list => list._id === id);
-    setSelectedList(selectedList);
+    setSelectedListId(id);
   };
   
   const onCreateList = (title) => {
     createList({title})
         .then(response => {
           const newList = response.data;
-          setLists([...lists, newList]);
-          setSelectedList(newList);
+          refreshList(newList._id);
         });
   };
   
@@ -40,29 +44,17 @@ const TodoList = () => {
       done: false,
       description: ""
     };
-    createTodo(selectedList._id, todo)
-        .then(response => {
-          const newTodo = response.data;
-          const listCopy = {...selectedList};
-          listCopy.todos.push(newTodo);
-          setSelectedList(listCopy);
-        })
+    createTodo(selectedListId, todo)
+        .then(refreshList(selectedListId));
   };
   
   const onUpdateTodo = (todo) => {
-    updateTodo(selectedList._id, todo)
-        .then(response => {
-          const updatedTodo = response.data;
-          const todos = selectedList.todos.map(todo => {
-            if (todo._id === updatedTodo._id) {
-              return updatedTodo;
-            } else {
-              return todo;
-            }
-          });
-          const listCopy = {...selectedList, todos};
-          setSelectedList(listCopy);
-        })
+    updateTodo(selectedListId, todo);
+  };
+  
+  const getSelectedList = () => {
+    const list = lists.find(list => list._id === selectedListId);
+    return list ? list : {};
   };
   
   return (
@@ -76,7 +68,7 @@ const TodoList = () => {
         </Segment>
         <div className={styles["todo-list"]}>
           <ListView
-              list={selectedList}
+              list={getSelectedList()}
               onCreateTodo={onCreateTodo}
               onUpdateTodo={onUpdateTodo}
           />
