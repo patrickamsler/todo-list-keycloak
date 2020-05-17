@@ -33,9 +33,14 @@ npm start
 Access React application: http://localhost:3000
 
 Keycloak comes with some predefined user profiles
-* User: John Password: password
-* User: Alice Password: password
+
+| User Name | Password |
+|-----------|----------|
+| John      | password |
+| Alice     | password |
 
 Access Keycloak admin console: http://localhost:8080/auth/admin
 
-User: admin Password: password
+| User Name | Password |
+|-----------|----------|
+| admin     | password |
