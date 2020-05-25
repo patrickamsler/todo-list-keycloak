@@ -21,14 +21,12 @@ You need docker-compose version 1.22.0 and React 16.0 or later to build the app.
 docker-compose up --build
 ```
 
-2. Then start the React client
+2. Then start the React client and access the app under: http://localhost:3000
 ```bash
 cd client
 npm install
 npm start
 ```
-
-Access React application: http://localhost:3000
 
 Keycloak comes with some predefined user profiles
 
