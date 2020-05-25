@@ -13,17 +13,15 @@ Simple React demo application that uses Keycloak for user authentication. The id
 | Keycloak        | Authorization server | Authenticates the resource owner and issues access tokens                      |
 | Node API        | Resource server      | The server that hosts the protected user data                                  |
 
-## Local Setup
-Prerequisites
-* docker-compose version 1.22.0 or later
-* React 16.0 or later
+## How to run
+You need docker-compose version 1.22.0 and React 16.0 or later to build the app.
 
-1. Build and run Docker containers with sample data for Keycloak, Node API and MongoDB:
+1. You can build and run Docker containers with sample data for Keycloak, Node API and MongoDB, as followes:
 ```bash
 docker-compose up --build
 ```
 
-2. Start React client
+2. Then start the React client
 ```bash
 cd client
 npm install
@@ -39,7 +37,7 @@ Keycloak comes with some predefined user profiles
 | John      | password |
 | Alice     | password |
 
-Access Keycloak admin console: http://localhost:8080/auth/admin
+The admin console is available under: http://localhost:8080/auth/admin
 
 | User Name | Password |
 |-----------|----------|
