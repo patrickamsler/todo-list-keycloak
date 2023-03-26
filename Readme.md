@@ -1,6 +1,10 @@
-# To-Do List React Application with Keycloak integration
+# React Application with Keycloak integration
 
-Simple React demo application that uses Keycloak for user authentication. The idea of the app is to demonstrate the concepts of login, SSO and silent authentication for single page applications. It includes a protected RESTful API based on NodeJS and MongoDB to store the user data. Keycloak exposes OAuth/OpenID-Connect endpoints to retrieve user information and issues access tokens by using the authorization code grant flow PKCE.
+This project is a full-stack web application that demonstrates how to use OAuth 2.0 and OpenID Connect with the authorization code grant flow and Proof Key for Code Exchange (PKCE) to secure a React client application and a Node.js API using Keycloak as an identity provider. The React client application allows users to login and access protected resources, while the Node.js API and the underling Mongo DB serves as the backend for the application.
+
+The demo app implements SSO to allow users to log in once and access multiple applications without having to log in again. It also implements silent authentication to keep the user logged in automatically even after the session expires.
+
+This project is a great starting point for developers who want to learn how to implement OAuth 2.0 and OpenID Connect with the authorization code grant flow and PKCE in their own React and Node.js applications using Keycloak as the identity provider.
 
 ## Overview
 ![alt text](doc/Diagram.png)
